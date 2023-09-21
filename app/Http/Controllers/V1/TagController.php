@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
+use App\Http\Controllers\Controller;
 
-use App\Models\AiModel;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
-class AiModelController extends Controller
+class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +28,7 @@ class AiModelController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(AiModel $aiModel)
+    public function show(Tag $tag)
     {
         //
     }
@@ -36,7 +37,7 @@ class AiModelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AiModel $aiModel)
+    public function update(Request $request, Tag $tag)
     {
         //
     }
@@ -44,7 +45,7 @@ class AiModelController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(AiModel $aiModel)
+    public function destroy(Tag $tag)
     {
         //
     }

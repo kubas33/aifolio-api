@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\V1;
+use App\Http\Controllers\Controller;
 
-use App\Models\AiImageMeta;
+use App\Models\AiImage;
 use Illuminate\Http\Request;
 
-class AiImageMetaController extends Controller
+class AiImageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +28,7 @@ class AiImageMetaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(AiImageMeta $aiImageMeta)
+    public function show(AiImage $aiImage)
     {
         //
     }
@@ -36,7 +37,7 @@ class AiImageMetaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AiImageMeta $aiImageMeta)
+    public function update(Request $request, AiImage $aiImage)
     {
         //
     }
@@ -44,7 +45,7 @@ class AiImageMetaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(AiImageMeta $aiImageMeta)
+    public function destroy(AiImage $aiImage)
     {
         //
     }

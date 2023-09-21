@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
-
-use App\Models\AiImage;
+namespace App\Http\Controllers\V1;
+use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-class AiImageController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,6 @@ class AiImageController extends Controller
     {
         //
     }
-
 
     /**
      * Store a newly created resource in storage.
@@ -27,7 +26,7 @@ class AiImageController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(AiImage $aiImage)
+    public function show(Category $category)
     {
         //
     }
@@ -36,7 +35,7 @@ class AiImageController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, AiImage $aiImage)
+    public function update(Request $request, Category $category)
     {
         //
     }
@@ -44,7 +43,7 @@ class AiImageController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(AiImage $aiImage)
+    public function destroy(Category $category)
     {
         //
     }
