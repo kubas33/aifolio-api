@@ -14,9 +14,19 @@ class AiImageMeta extends Model
 {
     use HasFactory, SoftDeletes;
 
-    public function aiModel() {
-        return $this->BelongsTo(AiModel::class);
+    /**
+     * Get the AI model that owns the AI image meta.
+     */
+    public function aiModel(): BelongsTo
+    {
+        return $this->belongsTo(AiModel::class);
     }
 
-
+    /**
+     * Get the AI image associated with the AI image meta.
+     */
+    public function aiImage(): BelongsTo
+    {
+        return $this->belongsTo(AiImage::class);
+    }
 }

@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('ai_image_metas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('ai_model_id')->nullable();;
+            $table->unsignedBigInteger('ai_image_id')->nullable();
+            $table->unsignedBigInteger('ai_model_id')->nullable();
             $table->string('ai_model_version')->nullable();
             $table->string('ai_model_hash')->nullable();
             $table->longText('positive_prompts')->nullable();;

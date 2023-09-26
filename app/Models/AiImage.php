@@ -13,25 +13,35 @@ class AiImage extends Model
 {
     use HasFactory, SoftDeletes;
 
-
-
-    public function user() {
+/**
+     * Get the user that owns the AI image.
+     */
+    public function user()
+    {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function category() {
+    /**
+     * Get the category that the AI image belongs to.
+     */
+    public function category()
+    {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
-    public function meta() {
+    /**
+     * Get the meta information of the AI image.
+     */
+    public function meta()
+    {
         return $this->hasOne(AiImageMeta::class, 'ai_image_meta_id', 'id');
     }
 
-    public function tags() {
+    /**
+     * Get the tags associated with the AI image.
+     */
+    public function tags()
+    {
         return $this->belongsToMany(Tag::class);
     }
-
 }
-
-
-
