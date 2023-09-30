@@ -29,11 +29,11 @@ Route::group([
 ], function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('register', [AuthController::class, 'register']);
-
 });
 
 Route::group([
-    'prefix' => 'v1'
+    'prefix' => 'v1',
+    'middleware' => 'auth:api'
 ], function () {
     Route::resource('ai-model', AiModelController::class)->except('create', 'edit');
     Route::resource('category', CategoryController::class)->except('create', 'edit');
