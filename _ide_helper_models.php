@@ -19,7 +19,6 @@ namespace App\Models{
  * @property string $file_name
  * @property string $image_type
  * @property int $category_id
- * @property int $ai_image_meta_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -32,7 +31,6 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|AiImage newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|AiImage onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|AiImage query()
- * @method static \Illuminate\Database\Eloquent\Builder|AiImage whereAiImageMetaId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AiImage whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AiImage whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AiImage whereDeletedAt($value)
@@ -53,6 +51,7 @@ namespace App\Models{
  * App\Models\AiImageMeta
  *
  * @property int $id
+ * @property int|null $ai_image_id
  * @property int|null $ai_model_id
  * @property string|null $ai_model_version
  * @property string|null $ai_model_hash
@@ -66,11 +65,13 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\AiImage|null $aiImage
  * @property-read \App\Models\AiModel|null $aiModel
  * @method static \Illuminate\Database\Eloquent\Builder|AiImageMeta newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|AiImageMeta newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|AiImageMeta onlyTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|AiImageMeta query()
+ * @method static \Illuminate\Database\Eloquent\Builder|AiImageMeta whereAiImageId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AiImageMeta whereAiModelHash($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AiImageMeta whereAiModelId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AiImageMeta whereAiModelVersion($value)
@@ -98,6 +99,7 @@ namespace App\Models{
  *
  * @property int $id
  * @property string $name
+ * @property string $slug
  * @property string|null $model_url
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -113,6 +115,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|AiModel whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AiModel whereModelUrl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AiModel whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AiModel whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AiModel whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AiModel withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|AiModel withoutTrashed()
@@ -156,6 +159,7 @@ namespace App\Models{
  *
  * @property int $id
  * @property string $name
+ * @property string $slug
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -167,6 +171,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tag whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tag withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Tag withoutTrashed()
