@@ -18835,6 +18835,66 @@
      
 }
 
+    namespace Illuminate\Database\Query { 
+            /**
+     * 
+     *
+     */ 
+        class Builder {
+                    /**
+         * 
+         *
+         * @see \Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider::registerMacro()
+         * @param int|null $maxResults
+         * @param int|null $defaultSize
+         * @static 
+         */ 
+        public static function jsonPaginate($maxResults = null, $defaultSize = null)
+        {
+                        return \Illuminate\Database\Query\Builder::jsonPaginate($maxResults, $defaultSize);
+        }
+         
+    }
+     
+}
+
+    namespace Illuminate\Database\Eloquent\Relations { 
+            /**
+     * 
+     *
+     */ 
+        class BelongsToMany {
+         
+    }
+            /**
+     * 
+     *
+     */ 
+        class Relation {
+                    /**
+         * 
+         *
+         * @see \Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider::registerMacro()
+         * @param int|null $maxResults
+         * @param int|null $defaultSize
+         * @static 
+         */ 
+        public static function jsonPaginate($maxResults = null, $defaultSize = null)
+        {
+                        return \Illuminate\Database\Eloquent\Relations\Relation::jsonPaginate($maxResults, $defaultSize);
+        }
+         
+    }
+            /**
+     * 
+     *
+     */ 
+        class HasManyThrough {
+         
+    }
+     
+}
+
 
 namespace  { 
             class App extends \Illuminate\Support\Facades\App {}
@@ -20457,6 +20517,19 @@ namespace  {
             {
                                 /** @var \Illuminate\Database\Eloquent\Builder $instance */
                                 return $instance->mergeConstraintsFrom($from);
+            }
+             
+                /**
+             * 
+             *
+             * @see \Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider::registerMacro()
+             * @param int|null $maxResults
+             * @param int|null $defaultSize
+             * @static 
+             */ 
+            public static function jsonPaginate($maxResults = null, $defaultSize = null)
+            {
+                                return \Illuminate\Database\Eloquent\Builder::jsonPaginate($maxResults, $defaultSize);
             }
              
                 /**

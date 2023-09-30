@@ -127,6 +127,7 @@ namespace App\Models{
  *
  * @property int $id
  * @property string $name
+ * @property string $slug
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -140,6 +141,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category withTrashed()
  * @method static \Illuminate\Database\Eloquent\Builder|Category withoutTrashed()
