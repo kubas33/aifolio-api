@@ -106,6 +106,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\AiImageMeta> $metas
  * @property-read int|null $metas_count
+ * @method static \Database\Factories\AiModelFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|AiModel newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|AiModel newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|AiModel onlyTrashed()
@@ -136,6 +137,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\AiImage> $aiImages
  * @property-read int|null $ai_images_count
+ * @method static \Database\Factories\CategoryFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Category newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Category newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Category onlyTrashed()
@@ -163,6 +165,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @method static \Database\Factories\TagFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Tag newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Tag newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Tag onlyTrashed()
