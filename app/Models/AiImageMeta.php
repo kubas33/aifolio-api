@@ -25,8 +25,8 @@ class AiImageMeta extends Model
     /**
      * Get the AI image associated with the AI image meta.
      */
-    public function aiImage(): BelongsTo
+    public function aiImage(): hasOne
     {
-        return $this->belongsTo(AiImage::class);
+        return $this->hasOne(AiImage::class);
     }
 }

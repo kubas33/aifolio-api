@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('file_name');
             $table->string('image_type');
             $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('ai_image_meta_id');
             $table->timestamps();
             $table->softDeletes();
         });
