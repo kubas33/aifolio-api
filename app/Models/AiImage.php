@@ -13,7 +13,7 @@ class AiImage extends Model
 {
     use HasFactory, SoftDeletes;
 
-/**
+    /**
      * Get the user that owns the AI image.
      */
     public function user()
@@ -34,7 +34,7 @@ class AiImage extends Model
      */
     public function meta()
     {
-        return $this->hasOne(AiImageMeta::class, 'ai_image_meta_id', 'id');
+        return $this->belongsTo(AiImageMeta::class, 'ai_image_meta_id', 'id');
     }
 
     /**
