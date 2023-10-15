@@ -23,6 +23,7 @@ class CategoryService
             $category = new Category();
             $category->name = $data['name'];
             $category->slug = Str::slug($data['name']);
+            
             $res = $category->save();
 
             return $res ? $category : throw new Exception('CANT_STORE_CATEGORY');
