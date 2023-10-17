@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -16,7 +18,7 @@ class AiImage extends Model
 /**
      * Get the user that owns the AI image.
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
@@ -24,7 +26,7 @@ class AiImage extends Model
     /**
      * Get the category that the AI image belongs to.
      */
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
@@ -32,15 +34,18 @@ class AiImage extends Model
     /**
      * Get the meta information of the AI image.
      */
-    public function meta()
+    public function meta(): BelongsTo
     {
         return $this->belongsTo(AiImageMeta::class, 'ai_image_meta_id', 'id');
     }
 
+    
     /**
      * Get the tags associated with the AI image.
+     *
+     * @return BelongsToMany
      */
-    public function tags()
+    public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
     }

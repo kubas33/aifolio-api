@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -25,7 +26,7 @@ class AiImageMeta extends Model
     /**
      * Get the AI image associated with the AI image meta.
      */
-    public function aiImage(): hasOne
+    public function aiImage(): HasOne
     {
         return $this->hasOne(AiImage::class);
     }
