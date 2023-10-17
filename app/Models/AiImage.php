@@ -15,7 +15,7 @@ class AiImage extends Model
 {
     use HasFactory, SoftDeletes;
 
-/**
+    /**
      * Get the user that owns the AI image.
      */
     public function user(): BelongsTo

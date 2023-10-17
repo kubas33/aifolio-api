@@ -25,6 +25,7 @@ class CategoryService
             $img_2 = $data['image_1'];
             $category->name = $data['name'];
             $category->slug = Str::slug($data['name']);
+            
             $res = $category->save();
 
             return $res ? $category : throw new Exception('CANT_STORE_CATEGORY');
