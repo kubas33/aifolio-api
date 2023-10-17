@@ -21,6 +21,8 @@ class CategoryService
     {
         try {
             $category = new Category();
+            $img_1 = $data['image_1'];
+            $img_2 = $data['image_1'];
             $category->name = $data['name'];
             $category->slug = Str::slug($data['name']);
             $res = $category->save();

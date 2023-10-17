@@ -56,6 +56,14 @@ return [
             'throw' => false,
         ],
 
+        'categoriesImages' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/categoriesImages'),
+            'url' => env('APP_URL').'/storage/categoriesImages',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
     ],
 
     /*

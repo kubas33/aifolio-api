@@ -43,6 +43,8 @@ class CategoryController extends Controller
     {
         $data = $request->validate([
             'name'=> 'required|min:3|unique:categories,name',
+            'image_1' => 'image|mimes:jpeg,png,jpg,gif,webp|max:4096',
+            'image_2' => 'image|mimes:jpeg,png,jpg,gif,webp|max:4096',
         ]);
 
         $category = $this->categoryService->create($data);
