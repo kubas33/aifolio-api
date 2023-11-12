@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Helpers\ImageHelper;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -17,12 +19,25 @@ class CategoryFactory extends Factory
      */
     public function definition(): array
     {
-        $numberOfWords = fake()->numberBetween(2, 4);
-        $name = 'Category ' . fake()->unique()->words($numberOfWords, true);
+
+        $image1Path = storage_path('app/exampleImages/categories/image1.jpg');
+        $image2Path = storage_path('app/exampleImages/categories/image2.jpg');
+
+        $numberOfWord = fake()->numberBetween(2, 4);
+        $name = 'Category ' . fake()->unique()->words($numberOfWord, true);
+        $slug = Str::slug($name);
+
+        $fileName1 = $slug . "_1_" . Carbon::now()->timestamp;
+        $fileName2 = $slug . "_2_" . Carbon::now()->timestamp;
+
+        ImageHelper::saveCategoryImage(file_get_contents($image1Path), $slug, $fileName1);
+        ImageHelper::saveCategoryImage(file_get_contents($image2Path), $slug, $fileName2);
 
         return [
             'name' => $name,
-            'slug' => Str::slug($name)
+            'slug' => Str::slug($name),
+            'image_1' => $fileName1,
+            'image_2' => $fileName2,
         ];
     }
 }

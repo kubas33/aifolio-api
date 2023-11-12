@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('ai_images', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('file_name');
+            $table->string('file_name')->nullable();
+            $table->string('original_file_name')->nullable();
             $table->string('image_type');
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('ai_image_meta_id');

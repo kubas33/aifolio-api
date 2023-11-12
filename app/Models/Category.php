@@ -16,23 +16,35 @@ class Category extends Model
     use HasFactory;
     use SoftDeletes;
 
+
     /**
-     * Get the URL of image_1 for the category.
+     * Retrieves the paths of the images associated with the current object.
      *
-     * @return string|null
+     * @return array An array containing the paths of the images.
      */
-    public function generateImage1UrlAttribute(): ?string
+    public function getImagesPaths(): array
     {
-        return Storage::disk('categoriesImages')->url("$this->id/$this->image_1");
-    }
-        /**
-     * Get the URL of image_2 for the category.
-     *
-     * @return string|null
-     */
-    public function generateImage2UrlAttribute(): ?string
-    {
-        return Storage::disk('categoriesImages')->url("$this->id/$this->image_2");
+        // Initialize variables for image paths
+        $image1 = '';
+        $image2 = '';
+
+        // Check if image 1 exists and has a valid path
+        if ($this->image_1 != null && Storage::disk('categoryImages')->has("$this->image_1")) {
+            // Get the URL of image 1
+            $image1 = Storage::disk('categoryImages')->url($this->image_1);
+        }
+
+        // Check if image 2 exists and has a valid path
+        if ($this->image_2 != null && Storage::disk('categoryImages')->has("$this->image_2")) {
+            // Get the URL of image 2
+            $image2 = Storage::disk('categoryImages')->url($this->image_2);
+        }
+
+        // Return the array of image paths
+        return [
+            $image1,
+            $image2
+        ];
     }
 
     /**

@@ -3,8 +3,12 @@
 namespace App\Services\V1;
 
 use App\Exceptions\JsonResponseException;
+use App\Helpers\ImageHelper;
 use App\Models\AiImage;
+use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Str;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,19 +35,31 @@ class AiImageService
     public function create(array $data): AiImage
     {
         try {
-            // Create aiImageMeta
-            $meta = $this->aiImageMetaService->create($data['meta']);
+            return DB::transaction(function () use ($data) {
 
-            // Create new aiImage
-            $aiImage = new AiImage();
-            $aiImage->name = $data['name'];
-            $aiImage->slug = Str::slug($data['name']);
-            $aiImage->model_url = $data['modelUrl'];
+                // Create aiImageMeta
+                $meta = $this->aiImageMetaService->create($data['meta']);
 
-            // Save aiImage
-            $res = $aiImage->save();
+                // Create new aiImage
+                $aiImage = new AiImage();
+                $aiImage->user_id = Auth::id();
+                $aiImage->image_type = $data['imageType'];
+                $aiImage->category_id = $data['categoryId'];
+                $aiImage->ai_image_meta_id = $meta->id;
 
-            return $res ? $aiImage : throw new Exception('CANT_STORE_AI_MODEL');
+                $fileName = $aiImage->id . "_" . Carbon::now()->timestamp;
+
+                ImageHelper::saveAiImage($data['image'], $aiImage->id, $fileName);
+                $aiImage->file_name = "$fileName.webp";
+                $aiImage->original_file_name = "orig_$fileName.png";
+
+                // Save aiImage
+                $res = $aiImage->save();
+                if (!$res) {
+                    throw new Exception('CANT_STORE_AI_IMAGE');
+                }
+                return $aiImage;
+            });
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             throw new JsonResponseException('Can\'t store aiImage', Response::HTTP_BAD_REQUEST);
@@ -62,14 +78,32 @@ class AiImageService
     {
         try {
             // Update aiImage
-            $aiImage->name = $data['name'];
-            $aiImage->slug = Str::slug($data['slug']);
-            $aiImage->model_url = $data['modelUrl'];
+            return DB::transaction(function () use ($aiImage, $data) {
+                $meta = $aiImage->meta;
+                $this->aiImageMetaService->update($meta, $data['meta']);
+                $aiImage->image_type = $data['imageType'];
+                $aiImage->category_id = $data['categoryId'];
 
-            // Save aiImage
-            $res = $aiImage->save();
+                if (isset($data['image'])) {
+                    $fileName = $aiImage->file_name;
+                    if (empty($fileName)) {
+                        $fileName = $aiImage->id . "_" . Carbon::now()->timestamp;
+                    }
+                    ImageHelper::saveAiImage($data['image'], $aiImage->id, $fileName);
+                    $aiImage->file_name = "$fileName.webp";
+                    $aiImage->original_file_name = "orig_$fileName.png";
+                }
 
-            return $res ? $aiImage : throw new Exception('CANT_UPDATE_AI_IMAGE');
+
+                // Save aiImage
+                $res = $aiImage->save();
+
+                if (!$res) {
+                    throw new Exception('CANT_STORE_AI_IMAGE');
+                }
+
+                return $aiImage;
+            });
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
             throw new JsonResponseException('Can\'t update aiImage', Response::HTTP_BAD_REQUEST);

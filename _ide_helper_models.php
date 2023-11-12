@@ -66,6 +66,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\AiImage|null $aiImage
  * @property-read \App\Models\AiModel|null $aiModel
  * @method static \Illuminate\Database\Eloquent\Builder|AiImageMeta newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|AiImageMeta newQuery()
@@ -131,6 +132,8 @@ namespace App\Models{
  * @property int $id
  * @property string $name
  * @property string $slug
+ * @property string|null $image_1
+ * @property string|null $image_2
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
@@ -144,6 +147,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereImage1($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Category whereImage2($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Category whereUpdatedAt($value)

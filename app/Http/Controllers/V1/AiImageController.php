@@ -49,7 +49,7 @@ class AiImageController extends Controller
     public function store(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'fileName' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:10240',
             'imageType' => 'required',
             'categoryId' => 'required',
             'meta' => 'required|array',
@@ -90,7 +90,7 @@ class AiImageController extends Controller
     public function update(Request $request, AiImage $aiImage): JsonResponse
     {
         $data = $request->validate([
-            'fileName' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:10240',
             'imageType' => 'required',
             'categoryId' => 'required',
             'meta' => 'required|array',

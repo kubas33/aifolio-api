@@ -22,7 +22,8 @@ class CategoryController extends Controller
     protected CategoryService $categoryService;
     protected CategoryQueryService $categoryQueryService;
 
-    public function __construct(CategoryService $categoryService, CategoryQueryService $categoryQueryService) {
+    public function __construct(CategoryService $categoryService, CategoryQueryService $categoryQueryService)
+    {
         $this->categoryService = $categoryService;
         $this->categoryQueryService = $categoryQueryService;
     }
@@ -42,9 +43,9 @@ class CategoryController extends Controller
     public function store(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'name'=> 'required|min:3|unique:categories,name',
-            'image_1' => 'image|mimes:jpeg,png,jpg,gif,webp|max:4096',
-            'image_2' => 'image|mimes:jpeg,png,jpg,gif,webp|max:4096',
+            'name' => 'required|min:3|unique:categories,name',
+            'image_1' => 'required|image|mimes:jpeg,png,jpg,webp|max:4096',
+            'image_2' => 'required|image|mimes:jpeg,png,jpg,webp|max:4096',
         ]);
 
         $category = $this->categoryService->create($data);
@@ -66,7 +67,9 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $data = $request->validate([
-            'name'=> ['required','min:3', Rule::unique('categories', 'name')->ignore($category)],
+            'name' => ['required', 'min:3', Rule::unique('categories', 'name')->ignore($category)],
+            'image_1' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:4096',
+            'image_2' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:4096',
         ]);
         $category = $this->categoryService->update($category, $data);
 
@@ -81,6 +84,5 @@ class CategoryController extends Controller
 
         $category = $this->categoryService->delete($category);
         return ResponseHelper::response(new CategoryResource($category), Response::HTTP_OK);
-
     }
 }

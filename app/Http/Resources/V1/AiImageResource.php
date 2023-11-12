@@ -23,6 +23,7 @@ class AiImageResource extends JsonResource
             'categoryId' => $this->category_id,
             'aiImageMetaId' => $this->ai_image_meta_id,
             'aiImageMeta' => $this->meta ? new AiImageMetaResource($this->meta) : null,
+            'imagePaths' => $this->getImagePaths(),
         ];
     }
 }
