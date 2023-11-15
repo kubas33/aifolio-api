@@ -23,7 +23,7 @@ class CategoryFactory extends Factory
         $image1Path = storage_path('app/exampleImages/categories/image1.jpg');
         $image2Path = storage_path('app/exampleImages/categories/image2.jpg');
 
-        $numberOfWord = fake()->numberBetween(2, 4);
+        $numberOfWord = fake()->numberBetween(2, 3);
         $name = 'Category ' . fake()->unique()->words($numberOfWord, true);
         $slug = Str::slug($name);
 

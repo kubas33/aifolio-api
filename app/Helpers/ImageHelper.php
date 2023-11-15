@@ -63,7 +63,7 @@ abstract class ImageHelper
     public static function saveAiImage(UploadedFile|string $image, string $path, string $fileName): bool
     {
         ImageHelper::saveOriginalImage($image, $path, $fileName, 'aiImages');
-        ImageHelper::resizeAndSaveImages($image, $path, $fileName, ['xxl' => 2000, 'lg' => 1080, 'md' => 720, 'sm' => 360], 'aiImages');
+        ImageHelper::resizeAndSaveImages($image, $path, $fileName, ['xxl' => 2160, 'lg' => 1080, 'md' => 720, 'sm' => 360], 'aiImages');
         return true;
     }
 }
