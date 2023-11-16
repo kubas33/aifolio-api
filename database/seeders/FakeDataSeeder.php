@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\AiImage;
+use App\Models\AiImageFilename;
 use App\Models\AiImageMeta;
 use App\Models\AiModel;
 use App\Models\Category;
@@ -42,12 +43,22 @@ class FakeDataSeeder extends Seeder
             $meta->save();
 
             $image = new AiImage();
+            $sizes_array = ['xxl' => 2160, 'lg' => 1080, 'md' => 720, 'sm' => 360];
             $image->user_id = fake()->numberBetween(1, 100);
-            $image->file_name = "image_" . fake()->numberBetween(1, 100) . ".png";
+            $filename_wo_ext = "image_" . fake()->numberBetween(1, 100);
+            $image->original_file_name = $filename_wo_ext . ".png";
             $image->image_type = 'text2img';
             $image->category_id = fake()->numberBetween(1, 100);
             $image->ai_image_meta_id = $meta->id;
             $image->save();
+            foreach ($sizes_array as $size => $width) {
+                $image_file = new AiImageFilename();
+                $image_file->ai_image_id = $image->id;
+                $image_file->filename = $size . "_" . $filename_wo_ext . ".webp";
+                $image_file->img_width = $width;
+                $image_file->img_height = $width;
+                $image_file->save();
+            }
 
             $tags = fake()->randomElements($tagsIds, fake()->numberBetween(1, 10));
             $image->tags()->sync($tags);

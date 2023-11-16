@@ -16,13 +16,15 @@ namespace App\Models{
  *
  * @property int $id
  * @property int $user_id
- * @property string $file_name
+ * @property string|null $original_file_name
  * @property string $image_type
  * @property int $category_id
  * @property int $ai_image_meta_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\AiImageFilename> $aiImageFilenames
+ * @property-read int|null $ai_image_filenames_count
  * @property-read \App\Models\Category|null $category
  * @property-read \App\Models\AiImageMeta|null $meta
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tag> $tags
@@ -36,9 +38,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|AiImage whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AiImage whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AiImage whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|AiImage whereFileName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AiImage whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AiImage whereImageType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AiImage whereOriginalFileName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AiImage whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AiImage whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|AiImage withTrashed()
@@ -46,6 +48,38 @@ namespace App\Models{
  * @mixin \Eloquent
  */
 	class IdeHelperAiImage {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\AiImageFilename
+ *
+ * @property int $id
+ * @property int $ai_image_id
+ * @property string $filename
+ * @property int $img_width
+ * @property int $img_height
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\AiImage $aiImage
+ * @method static \Illuminate\Database\Eloquent\Builder|AiImageFilename newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|AiImageFilename newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|AiImageFilename onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|AiImageFilename query()
+ * @method static \Illuminate\Database\Eloquent\Builder|AiImageFilename whereAiImageId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AiImageFilename whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AiImageFilename whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AiImageFilename whereFilename($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AiImageFilename whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AiImageFilename whereImgHeight($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AiImageFilename whereImgWidth($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AiImageFilename whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AiImageFilename withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|AiImageFilename withoutTrashed()
+ * @mixin \Eloquent
+ */
+	class IdeHelperAiImageFilename {}
 }
 
 namespace App\Models{
@@ -169,6 +203,8 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\AiImage> $aiImages
+ * @property-read int|null $ai_images_count
  * @method static \Database\Factories\TagFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Tag newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Tag newQuery()

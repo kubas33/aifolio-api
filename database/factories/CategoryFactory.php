@@ -27,8 +27,8 @@ class CategoryFactory extends Factory
         $name = 'Category ' . fake()->unique()->words($numberOfWord, true);
         $slug = Str::slug($name);
 
-        $fileName1 = $slug . "_1_" . Carbon::now()->timestamp;
-        $fileName2 = $slug . "_2_" . Carbon::now()->timestamp;
+        $fileName1 = "img_1_" . Carbon::now()->timestamp;
+        $fileName2 = "img_2_" . Carbon::now()->timestamp;
 
         ImageHelper::saveCategoryImage(file_get_contents($image1Path), $slug, $fileName1);
         ImageHelper::saveCategoryImage(file_get_contents($image2Path), $slug, $fileName2);

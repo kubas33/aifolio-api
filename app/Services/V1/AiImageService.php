@@ -50,8 +50,8 @@ class AiImageService
                 $fileName = $aiImage->id . "_" . Carbon::now()->timestamp;
 
                 ImageHelper::saveAiImage($data['image'], $aiImage->id, $fileName);
-                $aiImage->file_name = "$fileName.webp";
-                $aiImage->original_file_name = "orig_$fileName.png";
+                //TODO: $aiImage->file_name = "$fileName.webp";
+                $aiImage->original_file_name = "$fileName.png";
 
                 // Save aiImage
                 $res = $aiImage->save();
@@ -90,11 +90,9 @@ class AiImageService
                         $fileName = $aiImage->id . "_" . Carbon::now()->timestamp;
                     }
                     ImageHelper::saveAiImage($data['image'], $aiImage->id, $fileName);
-                    $aiImage->file_name = "$fileName.webp";
-                    $aiImage->original_file_name = "orig_$fileName.png";
+                    //TODO: $aiImage->file_name = "$fileName.webp";
+                    $aiImage->original_file_name = "$fileName.png";
                 }
-
-
                 // Save aiImage
                 $res = $aiImage->save();
 
@@ -122,7 +120,6 @@ class AiImageService
         try {
             // Delete aiImage
             $res = $aiImage->delete();
-
             return $res ? $aiImage : throw new Exception('CANT_DELETE_AI_IMAGE');
         } catch (Exception $exception) {
             Log::error($exception->getMessage());
