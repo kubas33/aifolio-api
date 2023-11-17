@@ -51,9 +51,32 @@ class AiImageService
                 $fileName = $aiImage->id . "_" . Carbon::now()->timestamp;
 
                 ImageHelper::saveAiImage($data['image'], $aiImage->id, $fileName);
-                //TODO: $aiImage->file_name = "$fileName.webp";
                 $aiImage->original_file_name = "$fileName.png";
 
+                $sizes_array = ['xxl' => 2160, 'lg' => 1080, 'md' => 720, 'sm' => 360];
+                //TODO czy to powinno być w AIImageFilenameService??
+                foreach ($sizes_array as $size => $width) {
+                    $aiImageFilename = new AiImageFilename();
+                    $aiImageFilename->ai_image_id = $aiImage->id;
+                    $aiImageFilename->file_name = $size . "_" . "$fileName.png";
+                    $aiImageFilename->img_width = $width;
+                    $aiImageFilename->img_height = $width;
+                    $res = $aiImageFilename->save();
+                    if (!$res) {
+                        throw new Exception('CANT_STORE_AI_IMAGE');
+                    }
+                }
+                foreach ($sizes_array as $size => $width) {
+                    $aiImageFilename = new AiImageFilename();
+                    $aiImageFilename->ai_image_id = $aiImage->id;
+                    $aiImageFilename->file_name = $size . "_" . "$fileName.webp";
+                    $aiImageFilename->img_width = $width;
+                    $aiImageFilename->img_height = $width;
+                    $res = $aiImageFilename->save();
+                    if (!$res) {
+                        throw new Exception('CANT_STORE_AI_IMAGE');
+                    }
+                }
                 // Save aiImage
                 $res = $aiImage->save();
                 if (!$res) {
@@ -86,13 +109,26 @@ class AiImageService
                 $aiImage->category_id = $data['categoryId'];
 
                 if (isset($data['image'])) {
-                    $fileName = $aiImage->file_name;
+                    $fileName = $aiImage->file_name; //TODO Czy nie lepiej stworzyć nową nazwę skoro wgrywamy nowy obrazek? 
                     if (empty($fileName)) {
                         $fileName = $aiImage->id . "_" . Carbon::now()->timestamp;
                     }
                     ImageHelper::saveAiImage($data['image'], $aiImage->id, $fileName);
-                    //TODO: $aiImage->file_name = "$fileName.webp";
                     $aiImage->original_file_name = "$fileName.png";
+
+                    $sizes_array = ['xxl' => 2160, 'lg' => 1080, 'md' => 720, 'sm' => 360];
+                    foreach ($sizes_array as $size => $width) {
+                        $aiImageFilename = new AiImageFilename();
+                        //TODO Czy przy update tworzyć nowe aiImageFilename?? co ze starymi??
+                        $aiImageFilename->ai_image_id = $aiImage->id;
+                        $aiImageFilename->file_name = $size . "_" . "$fileName.webp";
+                        $aiImageFilename->img_width = $width;
+                        $aiImageFilename->img_height = $width;
+                        $res = $aiImageFilename->save();
+                        if (!$res) {
+                            throw new Exception('CANT_STORE_AI_IMAGE');
+                        }
+                    }
                 }
                 // Save aiImage
                 $res = $aiImage->save();
