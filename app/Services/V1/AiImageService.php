@@ -5,6 +5,7 @@ namespace App\Services\V1;
 use App\Exceptions\JsonResponseException;
 use App\Helpers\ImageHelper;
 use App\Models\AiImage;
+use App\Models\AiImageFilename;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
