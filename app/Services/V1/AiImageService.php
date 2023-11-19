@@ -17,13 +17,15 @@ use Symfony\Component\HttpFoundation\Response;
 class AiImageService
 {
     protected AiImageMetaService $aiImageMetaService;
+    protected AiImageFilenameService $aiImageFilenameService;
 
     /**
      * @param AiImageMetaService $aiImageMetaService
      */
-    public function __construct(AiImageMetaService $aiImageMetaService)
+    public function __construct(AiImageMetaService $aiImageMetaService, AiImageFilenameService $aiImageFilenameService)
     {
         $this->aiImageMetaService = $aiImageMetaService;
+        $this->aiImageFilenameService = $aiImageFilenameService;
     }
 
     /**
@@ -52,36 +54,12 @@ class AiImageService
 
                 ImageHelper::saveAiImage($data['image'], $aiImage->id, $fileName);
                 $aiImage->original_file_name = "$fileName.png";
-
-                $sizes_array = ['xxl' => 2160, 'lg' => 1080, 'md' => 720, 'sm' => 360];
-                //TODO czy to powinno być w AIImageFilenameService??
-                foreach ($sizes_array as $size => $width) {
-                    $aiImageFilename = new AiImageFilename();
-                    $aiImageFilename->ai_image_id = $aiImage->id;
-                    $aiImageFilename->file_name = $size . "_" . "$fileName.png";
-                    $aiImageFilename->img_width = $width;
-                    $aiImageFilename->img_height = $width;
-                    $res = $aiImageFilename->save();
-                    if (!$res) {
-                        throw new Exception('CANT_STORE_AI_IMAGE');
-                    }
-                }
-                foreach ($sizes_array as $size => $width) {
-                    $aiImageFilename = new AiImageFilename();
-                    $aiImageFilename->ai_image_id = $aiImage->id;
-                    $aiImageFilename->file_name = $size . "_" . "$fileName.webp";
-                    $aiImageFilename->img_width = $width;
-                    $aiImageFilename->img_height = $width;
-                    $res = $aiImageFilename->save();
-                    if (!$res) {
-                        throw new Exception('CANT_STORE_AI_IMAGE');
-                    }
-                }
                 // Save aiImage
                 $res = $aiImage->save();
                 if (!$res) {
                     throw new Exception('CANT_STORE_AI_IMAGE');
                 }
+                $this->aiImageFilenameService->create($aiImage);
                 return $aiImage;
             });
         } catch (Exception $exception) {
@@ -109,34 +87,18 @@ class AiImageService
                 $aiImage->category_id = $data['categoryId'];
 
                 if (isset($data['image'])) {
-                    $fileName = $aiImage->file_name; //TODO Czy nie lepiej stworzyć nową nazwę skoro wgrywamy nowy obrazek? 
-                    if (empty($fileName)) {
-                        $fileName = $aiImage->id . "_" . Carbon::now()->timestamp;
-                    }
+                    $oldFileName = $aiImage->original_file_name;
+                    $fileName = $aiImage->id . "_" . Carbon::now()->timestamp;
                     ImageHelper::saveAiImage($data['image'], $aiImage->id, $fileName);
                     $aiImage->original_file_name = "$fileName.png";
-
-                    $sizes_array = ['xxl' => 2160, 'lg' => 1080, 'md' => 720, 'sm' => 360];
-                    foreach ($sizes_array as $size => $width) {
-                        $aiImageFilename = new AiImageFilename();
-                        //TODO Czy przy update tworzyć nowe aiImageFilename?? co ze starymi??
-                        $aiImageFilename->ai_image_id = $aiImage->id;
-                        $aiImageFilename->file_name = $size . "_" . "$fileName.webp";
-                        $aiImageFilename->img_width = $width;
-                        $aiImageFilename->img_height = $width;
-                        $res = $aiImageFilename->save();
-                        if (!$res) {
-                            throw new Exception('CANT_STORE_AI_IMAGE');
-                        }
-                    }
                 }
                 // Save aiImage
                 $res = $aiImage->save();
-
                 if (!$res) {
                     throw new Exception('CANT_STORE_AI_IMAGE');
                 }
-
+                $this->aiImageFilenameService->update($aiImage);
+                ImageHelper::deleteImage($oldFileName, 'aiImages');
                 return $aiImage;
             });
         } catch (Exception $exception) {
