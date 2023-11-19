@@ -63,7 +63,20 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
-
+        'aiImages' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/aiImages'),
+            'url' => env('APP_URL').'/storage/aiImages',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+        'exampleImages' => [
+            'driver' => 'local',
+            'root' => storage_path('app/exampleImages'),
+            'url' => env('APP_URL').'/storage/exampleImages',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
     ],
 
     /*

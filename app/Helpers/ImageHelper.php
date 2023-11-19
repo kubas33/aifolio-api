@@ -66,4 +66,11 @@ abstract class ImageHelper
         ImageHelper::resizeAndSaveImages($image, $path, $fileName, ['xxl' => 2160, 'lg' => 1080, 'md' => 720, 'sm' => 360], 'aiImages');
         return true;
     }
+
+    public static function deleteImage(string $fileName, string $storageType): bool
+    {
+        $storage = Storage::disk($storageType);
+        $storage->delete($fileName);
+        return true;
+    }
 }

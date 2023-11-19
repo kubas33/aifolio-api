@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('ai_image_filenames', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('ai_image_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('ai_image_id')->constrained();
             $table->string('filename');
             $table->smallInteger('img_width');
             $table->smallInteger('img_height');

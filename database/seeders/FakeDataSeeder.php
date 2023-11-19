@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Helpers\ImageHelper;
 use App\Models\AiImage;
 use App\Models\AiImageFilename;
 use App\Models\AiImageMeta;
@@ -9,9 +10,13 @@ use App\Models\AiModel;
 use App\Models\Category;
 use App\Models\Tag;
 use App\Models\User;
+use Exception;
 use Hash;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use PHPUnit\Event\Code\Test;
 
 class FakeDataSeeder extends Seeder
@@ -45,12 +50,17 @@ class FakeDataSeeder extends Seeder
             $image = new AiImage();
             $sizes_array = ['xxl' => 2160, 'lg' => 1080, 'md' => 720, 'sm' => 360];
             $image->user_id = fake()->numberBetween(1, 100);
-            $filename_wo_ext = "image_" . fake()->numberBetween(1, 100);
-            $image->original_file_name = $filename_wo_ext . ".png";
+            //$filename_wo_ext = "image_" . fake()->numberBetween(1, 100);
             $image->image_type = 'text2img';
             $image->category_id = fake()->numberBetween(1, 100);
             $image->ai_image_meta_id = $meta->id;
+            $image->save(); //zapisanie aby wygenerowało się id 
+
+            $filename_wo_ext = $image->id . "_" . Carbon::now()->timestamp;
+            $image->original_file_name = $filename_wo_ext . ".png";
             $image->save();
+
+            $this->saveRandomAiImage($image);
             foreach ($sizes_array as $size => $width) {
                 $image_file = new AiImageFilename();
                 $image_file->ai_image_id = $image->id;
@@ -62,6 +72,28 @@ class FakeDataSeeder extends Seeder
 
             $tags = fake()->randomElements($tagsIds, fake()->numberBetween(1, 10));
             $image->tags()->sync($tags);
+        }
+    }
+
+    function saveRandomAiImage(AiImage $image) {
+        $aiImageDisk = Storage::disk('exampleImages');
+
+        // Pobierz listę plików z folderu aiImages
+        $aiImageFiles = $aiImageDisk->allFiles('aiImages');
+
+        if (!empty($aiImageFiles)) {
+            // Wylosuj losowy plik z folderu
+            $randomAiImage = $aiImageFiles[array_rand($aiImageFiles)];
+
+            // Wczytaj zawartość pliku
+            $imageContent = $aiImageDisk->get($randomAiImage);
+
+            if ($imageContent) {
+                ImageHelper::saveAiImage($imageContent, $image->id, $image->original_file_name);
+            } 
+        } else {
+            // Obsługa sytuacji, gdy tablica jest pusta
+            throw new Exception('Brak plików w folderze aiImages.');
         }
     }
 }
