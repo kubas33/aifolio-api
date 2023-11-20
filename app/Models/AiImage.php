@@ -64,27 +64,52 @@ class AiImage extends Model
      */
     public function getImagePaths()
     {
-        // // Initialize variables for image paths
-        // $image = '';
-        // $originalImage = '';
+    // Initialize variables
+    $xxl = $lg = $md = $sm = $originalImage = null;
 
-        // // Check if image 1 exists and has a valid path
-        // if ($this->file_name != null && Storage::disk('aiImages')->has("$this->file_name")) {
-        //     // Get the URL of image 1
-        //     $image = Storage::disk('aiImages')->url($this->file_name);
-        // }
+    // Get the filename without extension of the original image
+        $originalImageWoExt = pathinfo($this->original_file_name, PATHINFO_FILENAME);
 
-        // // Check if image 2 exists and has a valid path
-        // if ($this->original_file_name != null && Storage::disk('aiImages')->has("$this->original_file_name")) {
-        //     // Get the URL of image 2
-        //     $originalImage = Storage::disk('aiImages')->url($this->original_file_name);
-        // }
+    // Get the resized image filenames
+        $resizedImages = $this->aiImageFilenames;
 
-        // // Return the array of image paths
-        // return [
-        //     'image' => $image,
-        //     'originalImage' => $originalImage
-        // ];
-        
+    // Loop through the resized images
+        foreach ($resizedImages as $resizedImage) {
+        // Get the filename without extension of the resized image
+            $resizedImageWoExt = pathinfo($resizedImage->filename, PATHINFO_FILENAME);
+
+        // Get the disk URL of the resized image
+            $diskUrl = Storage::disk('aiImages')->url($resizedImage->filename);
+
+        // Assign the disk URL to the corresponding variable based on the resized image's filename
+            switch ($resizedImageWoExt) {
+                case 'xxl_' . $originalImageWoExt:
+                    $xxl = $diskUrl;
+                    break;
+                case 'lg_' . $originalImageWoExt:
+                    $lg = $diskUrl;
+                    break;
+                case 'md_' . $originalImageWoExt:
+                    $md = $diskUrl;
+                    break;
+                case 'sm_' . $originalImageWoExt:
+                    $sm = $diskUrl;
+                    break;
+            }
+        }
+
+    // Check if the original image exists and get its disk URL
+        if ($this->original_file_name != null && Storage::disk('aiImages')->has("$this->original_file_name")) {
+            $originalImage = Storage::disk('aiImages')->url($this->original_file_name);
+        }
+
+    // Return the image paths as an array
+        return [
+            'originalImage' => $originalImage,
+            'xxl' => $xxl,
+            'lg' => $lg,
+            'md' => $md,
+            'sm' => $sm
+        ];
     }
 }

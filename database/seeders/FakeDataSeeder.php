@@ -28,8 +28,8 @@ class FakeDataSeeder extends Seeder
     {
         User::Factory(100)->create();
         Tag::Factory(100)->create();
-        AiModel::Factory(100)->create();
-        Category::Factory(100)->create();
+        AiModel::Factory(50)->create();
+        Category::Factory(50)->create();
 
         $tagsIds = Tag::all()->pluck('id')->toArray();
 

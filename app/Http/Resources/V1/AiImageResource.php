@@ -18,7 +18,7 @@ class AiImageResource extends JsonResource
         return [
             'id' => $this->id,
             'userId' => $this->user_id,
-            'fileName' => $this->file_name,
+            'fileName' => $this->original_file_name,
             'imageType' => $this->image_type,
             'categoryId' => $this->category_id,
             'aiImageMetaId' => $this->ai_image_meta_id,
