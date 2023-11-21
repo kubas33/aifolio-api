@@ -24,6 +24,7 @@ class AiImageResource extends JsonResource
             'aiImageMetaId' => $this->ai_image_meta_id,
             'aiImageMeta' => $this->meta ? new AiImageMetaResource($this->meta) : null,
             'imagePaths' => $this->getImagePaths(),
+            'imageFilenames' => AiImageFilenameResource::collection($this->aiImageFilenames) ?? null,
         ];
     }
 }
