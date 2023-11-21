@@ -10,9 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
-/**
- * @mixin IdeHelperAiImage
- */
+
 class AiImage extends Model
 {
     use HasFactory, SoftDeletes;
